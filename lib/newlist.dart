@@ -78,7 +78,12 @@ class _NewListState extends State<NewList> {
                 height: deviceHight / 4
                 ,child:
               Card(margin: EdgeInsets.all(13),child: Column(crossAxisAlignment:CrossAxisAlignment.center,mainAxisAlignment: MainAxisAlignment.center ,children: [
-                Text("YENİ LİSTE EKLE",style: TextStyle(fontSize: 16,fontWeight: FontWeight.bold,color: HexColor(mainColor)),),
+                Column(
+                  children: [
+                    Text("YENİ LİSTE EKLE",style: TextStyle(fontSize: 16,fontWeight: FontWeight.bold,color: HexColor(mainColor)),),
+                    Text("Var olan liste silinir,yeni liste eklenir.",style: TextStyle(fontSize: 13,fontWeight: FontWeight.bold,color: HexColor(mainColor)),),
+                  ],
+                ),
                 IconButton(icon: Icon(Icons.add_box,size: 90,color: HexColor(mainColor)),onPressed: ()async{
                   apiService.deletePdf(userId);
                   Navigator.push(context, MaterialPageRoute(builder: (context) => Listadd(),settings: RouteSettings(
@@ -92,7 +97,12 @@ class _NewListState extends State<NewList> {
                 height: deviceHight / 4
                 ,child:
               Card(margin: EdgeInsets.all(13),child: Column(crossAxisAlignment:CrossAxisAlignment.center,mainAxisAlignment: MainAxisAlignment.center ,children: [
-                Text("DEVAM EDEN LİSTEYİ GİT",style: TextStyle(fontSize: 16,fontWeight: FontWeight.bold,color: HexColor(mainColor)),),
+                Column(
+                  children: [
+                    Text("DEVAM EDEN LİSTEYİ GİT",style: TextStyle(fontSize: 16,fontWeight: FontWeight.bold,color: HexColor(mainColor)),),
+                    Text("Var olan listeye devam edilir.",style: TextStyle(fontSize: 13,fontWeight: FontWeight.bold,color: HexColor(mainColor)),),
+                  ],
+                ),
                 IconButton(icon: Icon(Icons.remove_red_eye,size: 90,color: HexColor(mainColor),),onPressed: (){Navigator.push(context, MaterialPageRoute(builder: (context) => Listadd(),settings: RouteSettings(
                   arguments: userId,
                 ),

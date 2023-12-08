@@ -10,7 +10,7 @@ import 'package:intl/intl.dart';
 import 'package:nodejstoflutter/constants/api_constanst.dart';
 import 'package:nodejstoflutter/constants/color.dart';
 import 'package:nodejstoflutter/model/list_products.dart';
-import 'package:nodejstoflutter/services/api.dart';
+import 'package:nodejstoflutter/newlist.dart';
 import 'package:nodejstoflutter/services/api_service.dart';
 import 'package:nodejstoflutter/views/pdf_page1.dart';
 
@@ -135,7 +135,11 @@ class _ListaddState extends State<Listadd> {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-
+                          Padding(
+                              padding: EdgeInsets.only(top: 10,left: 10),
+                              child: IconButton(onPressed:(){Navigator.push(context, MaterialPageRoute(builder: (context) => NewList(),settings: RouteSettings(
+                                arguments: userId,
+                              ),));} ,icon: Icon(Icons.arrow_back,color: Colors.white,size: 30,),)),
                           Padding(
                               padding: EdgeInsets.only(top: 10,left: 10),
                               child:  Text(DateFormat("dd/MM/yyyy").format(dateTime),style: TextStyle(fontWeight: FontWeight.bold,fontSize: 16,color: Colors.white),)),
@@ -167,11 +171,7 @@ class _ListaddState extends State<Listadd> {
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            Icon(
-                              Icons.add,
-                              color: Colors.white,
-                              size: 40,
-                            ),
+
                             Text(
                               "Ürün Ekleme Sayfası",
                               style: TextStyle(

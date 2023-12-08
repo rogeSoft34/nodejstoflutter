@@ -110,8 +110,8 @@ class _SignInFormNewState extends State<SignInFormNew> {
                                   'color':"Sarı",
                                   "width":10.0},],
                               };
-                              Api.addUser1(data);
-                              Navigator.push(context, MaterialPageRoute(builder: (context) => LogInFormNew(),));
+                              Api.addUser1(context,data);
+
 
                             },
                             style: ElevatedButton.styleFrom(

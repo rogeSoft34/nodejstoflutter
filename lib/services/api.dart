@@ -5,6 +5,7 @@ import 'package:http/http.dart' as http;
 import 'package:nodejstoflutter/model/user_details.dart';
 import 'package:nodejstoflutter/model/user_register.dart';
 import 'package:nodejstoflutter/newlist.dart';
+import 'package:nodejstoflutter/screens/onboding/components/login_form_new.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:jwt_decode/jwt_decode.dart';
 
@@ -13,7 +14,7 @@ class Api{
   //static const baseUrl="http://192.168.1.47:3000/api/";
   static const baseUrl="https://easylist-vyor.onrender.com/api/";
 
-  static adduser(Map udata) async {
+  static adduser(BuildContext context,Map udata) async {
     print("Create Bölümü Çalıştı ${udata}");
     
     var url=Uri.parse("${baseUrl}user/register");
@@ -24,9 +25,25 @@ class Api{
       if (res.statusCode == 200) {
      Map data=jsonDecode(res.body);
       print(data);
+     Navigator.push(context, MaterialPageRoute(builder: (context) => LogInFormNew(),));
+     ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+       backgroundColor: Colors.green,
 
+       content: Text(
+         "Kullanıcı başarı ile oluşturuldu.",
+         style: TextStyle(color: Colors.white),
+       ),
+     ));
 
       } else {
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+          backgroundColor: Colors.red,
+
+          content: Text(
+            "Girmiş olduğunuz bilgiler eksik lütfen tekrar deneyiniz.",
+            style: TextStyle(color: Colors.white),
+          ),
+        ));
  print("failed");
       }
     }catch(err){
@@ -34,7 +51,7 @@ class Api{
   }
   }
 
-  static Future<void> addUser1(Map udata) async {
+  static Future<void> addUser1(BuildContext context,Map udata) async {
     var url=Uri.parse("${baseUrl}user/register");
     final response = await http.post(
       url,
@@ -44,9 +61,26 @@ class Api{
 
     if (response.statusCode == 200) {
       var data=jsonDecode(response.body);
+      Navigator.push(context, MaterialPageRoute(builder: (context) => LogInFormNew(),));
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        backgroundColor: Colors.green,
+
+        content: Text(
+          "Kullanıcı başarı ile oluşturuldu.",
+          style: TextStyle(color: Colors.white),
+        ),
+      ));
       //fetchUsers(); // Kullanıcı ekledikten sonra listeyi güncelle
       print(data +"Eklendiiii");
     } else {
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        backgroundColor: Colors.red,
+
+        content: Text(
+          "Girmiş olduğunuz bilgiler eksik lütfen tekrar deneyiniz.",
+          style: TextStyle(color: Colors.white),
+        ),
+      ));
       print("Eklenmedi, HTTP Durum Kodu: ${response.statusCode}");
     }
   }
@@ -169,6 +203,14 @@ class Api{
       final token = jsonDecode(response.body)['token'];
       final userId = getUserIdFromToken(token);
       print ("Giriş ok");
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        backgroundColor: Colors.green,
+
+        content: Text(
+          "Başarı ile giriş yaptınız",
+          style: TextStyle(color: Colors.white),
+        ),
+      ));
       // Token'ı saklamak için SharedPreferences kullanabilirsiniz.
       SharedPreferences prefs = await SharedPreferences.getInstance();
       prefs.setString('token', token);
@@ -180,8 +222,17 @@ class Api{
         MaterialPageRoute(builder: (context) => NewList(),settings: RouteSettings(
           arguments: userId,
         ),),
+
       );
     } else {
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        backgroundColor: Colors.red,
+
+        content: Text(
+          "Email ve ya şifreniz yanlış lütfen tekrar deneyiniz.",
+          style: TextStyle(color: Colors.white),
+        ),
+      ));
       print('Giriş başarısız: ${response.body}');
     }
   }
