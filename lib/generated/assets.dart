@@ -71,6 +71,7 @@ class Assets {
   static const String servicesApi = 'lib/services/api.dart';
   static const String servicesApiService = 'lib/services/api_service.dart';
   static const String servicesAuthService = 'lib/services/AuthService.dart';
+  static const String servicesGoogleAds = 'lib/services/google_ads.dart';
   static const String shapesCircle = 'lib/assets/shapes/Circle.svg';
   static const String shapesHexagon = 'lib/assets/shapes/Hexagon.svg';
   static const String shapesTriangle = 'lib/assets/shapes/Triangle.svg';

@@ -1,5 +1,6 @@
 
 import 'package:flutter/material.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'dart:async';
 import 'dart:io';
@@ -12,17 +13,19 @@ import 'package:nodejstoflutter/constants/color.dart';
 import 'package:nodejstoflutter/model/list_products.dart';
 import 'package:nodejstoflutter/newlist.dart';
 import 'package:nodejstoflutter/services/api_service.dart';
+import 'package:nodejstoflutter/services/google_ads.dart';
 import 'package:nodejstoflutter/views/pdf_page1.dart';
 
 class Listadd extends StatefulWidget {
   const Listadd({Key? key}) : super(key: key);
 
   @override
-  @override
+
   State<Listadd> createState() => _ListaddState();
 }
 
 class _ListaddState extends State<Listadd> {
+final GoogleAds googleAds=GoogleAds();
 
  // AuthService authService=AuthService();
   List<String> paraBirimi=['₺','\$','€'];
@@ -35,24 +38,16 @@ class _ListaddState extends State<Listadd> {
   double _price = 0;
   double _total = 0;
   String uid="12";
+
 @override
-  /*void initState() {
-    // TODO: implement initState
+void initState() {
+   googleAds.loadBannerAd(adlLoaded: (){
+     setState(() {
+
+     });
+   });
     super.initState();
-   uid1();
-  }*/
-
-  /*void uid1() async {
-    String? userId = await authService.getCurrentUserId();
-    uid=userId!;
-    if (userId != null) {
-      print("Kullanıcı UID: $userId");
-    } else {
-      print("Kullanıcı oturum açmamış veya hata oluştu.");
-    }
-
-  }*/
-
+  }
   final _formKey = GlobalKey<
       FormState>(); // Formu butonda çağıra bilmek için bir key veriliyor onu bu şekilde key ile formda çaırıyoruz
   final ImagePicker _picker = ImagePicker();
@@ -192,6 +187,12 @@ class _ListaddState extends State<Listadd> {
                   padding: const EdgeInsets.fromLTRB(20, 10, 20, 10),
                   child: Column(
                     children: [
+                      if (googleAds.bannerAd!= null)
+                        Container(
+                          width:468 ,
+                          height: 60,
+                          child: AdWidget(ad: googleAds.bannerAd!,),
+                        ),
                       Card(
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(13)),
@@ -469,6 +470,7 @@ class _ListaddState extends State<Listadd> {
                               child: Text('EKLE')),
                           ElevatedButton(
                               onPressed: () {
+                                googleAds.showInterstitialAd();
                                 Navigator.push(
                                     context,
                                     MaterialPageRoute(
@@ -487,6 +489,7 @@ class _ListaddState extends State<Listadd> {
               ],
             ),
           )),
+
     );
   }
 
