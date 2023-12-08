@@ -46,6 +46,7 @@ void initState() {
 
      });
    });
+   googleAds.loadInterstitialAd();
     super.initState();
   }
   final _formKey = GlobalKey<

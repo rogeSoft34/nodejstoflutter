@@ -71,13 +71,13 @@ class Api{
         ),
       ));
       //fetchUsers(); // Kullanıcı ekledikten sonra listeyi güncelle
-      print(data +"Eklendiiii");
+      print("Eklendiiii");
     } else {
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
         backgroundColor: Colors.red,
 
         content: Text(
-          "Girmiş olduğunuz bilgiler eksik lütfen tekrar deneyiniz.",
+          "Email kullanılıyor yada girmiş olduğunuz bilgiler eksik  lütfen tekrar deneyiniz.",
           style: TextStyle(color: Colors.white),
         ),
       ));
