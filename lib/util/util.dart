@@ -16,8 +16,12 @@ APIService apiService = APIService();
 
 Future<Uint8List> generatePdf(final PdfPageFormat format,String userId,context) async {
   print("*********UserId: $userId");
-
+  final font = await PdfGoogleFonts.nunitoBold();
   final List<ListProducts> data = await apiService.getListProduct(userId);
+  //final double totalAmount = await apiService.getTotalAmount(userId);
+  final double? totalAmountNullable = await apiService.getTotalAmount(userId);
+  final double totalAmount = totalAmountNullable ?? 0.0;
+
 
   print("UserId: $userId");
   if (data.isEmpty) {
@@ -59,7 +63,7 @@ Future<Uint8List> generatePdf(final PdfPageFormat format,String userId,context) 
     ),
   );*/
 
-  final font = await PdfGoogleFonts.nunitoBold();
+
   final logoImage = pw.MemoryImage((await rootBundle.load(
     'lib/assets/images/rogeKare.png',
   ))
@@ -109,6 +113,7 @@ Future<Uint8List> generatePdf(final PdfPageFormat format,String userId,context) 
           pw.Image(footerImage, fit: pw.BoxFit.scaleDown, width: 80),
       build: (final context) => [
             pw.Container(
+              margin: pw.EdgeInsets.all(7),
                 padding: pw.EdgeInsets.only(left: 30, bottom: 0),
                 child: pw.Column(
                     mainAxisAlignment: pw.MainAxisAlignment.start,
@@ -124,6 +129,27 @@ Future<Uint8List> generatePdf(final PdfPageFormat format,String userId,context) 
                         fontSize: 30, fontWeight: pw.FontWeight.bold))),
             pw.SizedBox(height: 21),
             tableWidget,
+        pw.SizedBox(height: 21),
+  pw.Row(mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
+  children:[
+    pw.Container( alignment: pw.Alignment.centerRight,
+      child:pw.Text(
+          '',
+          style: pw.TextStyle(fontSize: 22,font: font,),textAlign: pw.TextAlign.right
+      ),),
+
+    pw.Container(  padding: pw.EdgeInsets.all(7),decoration: pw.BoxDecoration(
+     border: pw.Border.all(
+       color: PdfColors.red400, // Kenarlık rengi
+       width: 3.0, // Kenarlık genişliği
+     ),
+
+   ), alignment: pw.Alignment.centerRight,
+     child:pw.Text(
+  'Toplam Tutar: ${NumberFormat.decimalPattern().format(totalAmount)}${data[0].parabirimi.toString()}  ',
+  style: pw.TextStyle(fontSize: 22,font: font,),textAlign: pw.TextAlign.right
+  ),),])
+
           ]));
   return doc.save();
 }
@@ -190,6 +216,8 @@ Future<pw.Widget> customTable(List<ListProducts> data) async {
     children: rows,
   );
 }
+
+
 Future<Uint8List> compressPdf(Uint8List inputPdf) async {
   final pdf = pw.Document();
   final logoImage = pw.MemoryImage(inputPdf);
@@ -271,3 +299,7 @@ void listeBosToast(final BuildContext context) {
   ScaffoldMessenger.of(context)
       .showSnackBar(SnackBar(content: Text("Listeye herhangi bir ürün eklenmemiş")));
 }
+
+
+
+

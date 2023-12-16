@@ -14,6 +14,7 @@ import 'package:nodejstoflutter/model/list_products.dart';
 import 'package:nodejstoflutter/newlist.dart';
 import 'package:nodejstoflutter/services/api_service.dart';
 import 'package:nodejstoflutter/services/google_ads.dart';
+import 'package:nodejstoflutter/views/listEdit.dart';
 import 'package:nodejstoflutter/views/pdf_page1.dart';
 
 class Listadd extends StatefulWidget {
@@ -106,9 +107,9 @@ void initState() {
     double deviceWidth = MediaQuery.of(context).size.width;
 
     bool isTextFieldVisible = descriptionController.text.isEmpty ||
-        priceController.text.isEmpty ||
-        firmaNameController.text.isEmpty ||
-        dosya!.path.isEmpty;
+        priceController.text.isEmpty ||peersController.text.isEmpty ||
+        firmaNameController.text.isEmpty;
+       //|| dosya!.path.isEmpty;
 
     return SafeArea(
       child: Scaffold(
@@ -481,7 +482,20 @@ void initState() {
 
                               },
 
-                              child: Text("Görüntüle"))
+                              child: Text("Görüntüle")),
+                          ElevatedButton(
+                              onPressed: () {
+                                googleAds.showInterstitialAd();
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => ListEdit(),settings: RouteSettings(
+                                      arguments: userId,
+                                    ),));
+
+                              },
+
+                              child: Text("Liste Düzelt"))
                         ],
                       ),
                     ],
@@ -502,14 +516,20 @@ void initState() {
     print("Post Fonksiyonu");
     print("USERID:"+userId);
     //print(dosya);
-
+   /* showDialog(context: context, builder:((context){
+      return Center(child: CircularProgressIndicator());
+    }));*/
     var response = await http.post(Uri.parse("https://easylist-vyor.onrender.com/api/user/addPdf/$userId"),
         headers: <String, String>{"Content-Type": "application/json"},
         body: jsonEncode(pdfData));
     print("USERID:"+userId);
     print( response.statusCode);
+
     if (response.statusCode == 201) {
       print('PDF eklendi.');
+   /*   Navigator.push(context, MaterialPageRoute(builder: (context) => Listadd(),settings: RouteSettings(
+        arguments: userId,
+      ),));*/
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
         backgroundColor: Colors.green,
         content: Text(
@@ -517,6 +537,7 @@ void initState() {
           style: TextStyle(color: Colors.white),
         ),
       ));
+
     } else {
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
           backgroundColor: Colors.red,
@@ -525,6 +546,7 @@ void initState() {
             style: TextStyle(color: Colors.white),
           )));
     }
+
     print("PARABİRİMİ: "+selectParaBirimi);
     print("USERID:"+userId);
 
@@ -545,7 +567,6 @@ void initState() {
         }));
 
     if (response.statusCode == 200) {
-      print("TEEEEEEST");
       print(uid);
      // print(FirebaseFirestore.instance.doc(uid).get().then((gelenveri){gelenveri.data()!['name'];}));
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(

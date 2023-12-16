@@ -11,7 +11,7 @@ class  GoogleAds{
   void loadInterstitialAd({bool showAfterLoad=false}) {
 
     InterstitialAd.load(
-        adUnitId: "ca-app-pub-3940256099942544/1033173712", //test kodudur
+        adUnitId: "ca-app-pub-3548150310285661~1858545993", //test kodudur
         request: const AdRequest(),
         adLoadCallback: InterstitialAdLoadCallback(
           // Called when an ad is successfully received.
@@ -35,7 +35,7 @@ class  GoogleAds{
 
   void loadBannerAd({required VoidCallback adlLoaded}) {
      bannerAd = BannerAd(
-      adUnitId: "ca-app-pub-3940256099942544/6300978111",
+      adUnitId: "ca-app-pub-3548150310285661~1858545993",
       request: const AdRequest(),
       size: AdSize.fullBanner,
       listener: BannerAdListener(

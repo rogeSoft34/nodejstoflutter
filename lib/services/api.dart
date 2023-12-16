@@ -53,6 +53,11 @@ class Api{
 
   static Future<void> addUser1(BuildContext context,Map udata) async {
     var url=Uri.parse("${baseUrl}user/register");
+
+    //Data gelene kadar bekleme göstergesi
+    showDialog(context: context, builder:((context){
+      return Center(child: CircularProgressIndicator());
+    }));
     final response = await http.post(
       url,
         headers: {'Content-Type': 'application/json'},
@@ -189,6 +194,11 @@ class Api{
 
   static Future<String?>  login(BuildContext context,Map udata) async {
     var url=Uri.parse(baseUrl+"user/login");
+    
+    showDialog(context: context, builder:((context){
+      return Center(child: CircularProgressIndicator());
+    }));
+
     final response = await http.post(url,
       //headers: {'Content-Type': 'application/json'},
       body:udata
@@ -200,6 +210,7 @@ class Api{
     }
 
     if (response.statusCode == 200) {
+
       final token = jsonDecode(response.body)['token'];
       final userId = getUserIdFromToken(token);
       print ("Giriş ok");

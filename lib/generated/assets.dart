@@ -76,6 +76,7 @@ class Assets {
   static const String shapesHexagon = 'lib/assets/shapes/Hexagon.svg';
   static const String shapesTriangle = 'lib/assets/shapes/Triangle.svg';
   static const String utilUtil = 'lib/util/util.dart';
+  static const String viewsListEdit = 'lib/views/listEdit.dart';
   static const String viewsPdfPage1 = 'lib/views/pdf_page1.dart';
 
 }

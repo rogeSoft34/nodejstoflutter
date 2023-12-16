@@ -81,5 +81,51 @@ class APIService {
       print('PDF silme hatası: ${response.statusCode}');
     }
   }
+  Future<void> deletePruduct(String id) async {
+    print("İD=>"+id);
+    final response = await http.post(
+      Uri.parse('https://easylist-vyor.onrender.com/api/user/listitemdelete/$id'),
+      //Uri.parse('http://192.168.1.47/api/user/listitemdelete/$id'),
+        //print('https://easylist-vyor.onrender.com/api/user/listitemdelete/$id');
+    );
+    print("Status Code=>${response.statusCode}");
+
+    if (response.statusCode == 200) {
+      print('Ürün başarıyla silindi.');
+    } else {
+      print('Ürün silme hatası: ${response.statusCode}');
+    }
+  }
+
+
+
+
+  Future<double?> getTotalAmount(String bid) async {
+    final response = await http.get(Uri.parse('https://easylist-vyor.onrender.com/api/user/getTotalAmount/$bid'));
+
+    if (response.statusCode == 200) {
+      List<dynamic> responseBody = json.decode(response.body);
+
+      if (responseBody.isNotEmpty) {
+        Map<String, dynamic> result = responseBody[0];
+
+        if (result.containsKey('totalAmount')) {
+          double totalAmount = result['totalAmount']?.toDouble();
+          print('Toplam Tutar: $totalAmount');
+          return totalAmount;
+        } else {
+          print('totalAmount anahtarı bulunamadı.');
+        }
+      } else {
+        print('Liste boş.');
+      }
+    } else {
+      print('Hata Kodu: ${response.statusCode}');
+      print('Hata Mesajı: ${response.body}');
+    }
+
+    return null;
+  }
 
 }
+

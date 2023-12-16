@@ -62,10 +62,11 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                     const SizedBox(
                       width: 260,
                       child: Column(children: [
+                      Image(image: AssetImage("lib/assets/images/rogeKare.png")),
                         Text(
-                          "EasyList & Rogesoft",
+                          "EasyList",
                           style: TextStyle(
-                              fontSize: 60, fontFamily: "Poppins", height: 1.2),
+                              fontSize: 30, fontFamily: "Poppins", height: 1.2),
                         ),
                         SizedBox(
                           height: 16,

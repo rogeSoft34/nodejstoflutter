@@ -1,6 +1,7 @@
 
 
 class ListProducts {
+  String? id;
   String?bid;
   String? companyto;
   String? description;
@@ -11,15 +12,16 @@ class ListProducts {
   DateTime? datetime;
 
 
-  ListProducts({this.bid,this.companyto,this.description, this.image, this.price, this.peers,this.parabirimi,this.datetime});
+  ListProducts({this.id,this.bid,this.companyto,this.description, this.image, this.price, this.peers,this.parabirimi,this.datetime});
 
   ListProducts.fromJson(Map<String, dynamic> json) {
+    id= json['_id'];
     bid= json['bid'];
     companyto = json['companyto'];
     description = json['description'];
     image = json['image'];
     price = json['price']== null ? 0.0 : json['price'].toDouble();
-    peers = json['peers']== null ? 0 : json['price'].toInt();
+    peers = json['peers']== null ? 0 : json['peers'].toInt();
     parabirimi=json['parabirimi'];
     datetime = DateTime.parse(json['datetime'] as String);
 
@@ -27,6 +29,7 @@ class ListProducts {
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['_id'] = this.id;
     data['bid'] = this.bid;
     data['companyto'] = this.companyto;
     data['description'] = this.description;
